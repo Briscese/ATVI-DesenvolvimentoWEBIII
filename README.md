@@ -1,6 +1,7 @@
-# Nome do Seu Projeto
+# ATV - I
+# Automanager - Microserviço de Cadastro de Clientes
 
-Descrição curta do seu projeto.
+O Automanager é um microserviço desenvolvido em Java com o framework Spring Boot para realizar o cadastro de dados de clientes, incluindo informações pessoais, documentos, endereço e telefones.
 
 ## Configuração
 
