@@ -46,7 +46,7 @@ public class AutomanagerApplication {
                 Telefone telefone = new Telefone();
                 telefone.setDdd("21");
                 telefone.setNumero("981234576");
-                cliente.getTelefones().add(telefone);
+                cliente.addTelefone(telefone);
 
                 // Adiciona um endereço ao cliente
                 Endereco endereco = new Endereco();

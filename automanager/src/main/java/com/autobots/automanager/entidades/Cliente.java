@@ -13,10 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Data
 @Entity
+@JsonIgnoreProperties
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +35,37 @@ public class Cliente {
 	private Date dataCadastro;
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Documento> documentos = new ArrayList<>();
+
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Endereco endereco;
-	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+	
+	
+	@OneToMany(mappedBy = "cliente", orphanRemoval = true, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Telefone> telefones = new ArrayList<>();
+	
+	public void addDocumento(Documento documento) {
+		documentos.add(documento);
+		documento.setCliente(this);
+	}
+
+	public void removeDocumento(Documento documento) {
+		documentos.remove(documento);
+		documento.setCliente(null);
+	}
+
+	public void addTelefone(Telefone telefone) {
+	    if (telefones == null) {
+	        telefones = new ArrayList<>();
+	    }
+	    telefones.add(telefone);
+	    telefone.setCliente(this);
+	}
+
+
+	public void removeTelefone(Telefone telefone) {
+		telefones.remove(telefone);
+		telefone.setCliente(null);
+	}
 
 }

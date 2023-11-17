@@ -23,6 +23,7 @@ import com.autobots.automanager.entidades.Documento;
 import com.autobots.automanager.entidades.Endereco;
 import com.autobots.automanager.entidades.Telefone;
 import com.autobots.automanager.modelo.ClienteAtualizador;
+import com.autobots.automanager.modelo.ClienteCadastro;
 import com.autobots.automanager.modelo.ClienteDTO;
 import com.autobots.automanager.modelo.ClienteSelecionador;
 import com.autobots.automanager.modelo.DocumentoDTO;
@@ -37,6 +38,8 @@ public class ClienteControle {
 	private ClienteRepositorio repositorio;
 	@Autowired
 	private ClienteSelecionador selecionador;
+	@Autowired
+    private ClienteCadastro clienteCadastro;
 	
 	
 
@@ -120,9 +123,14 @@ public class ClienteControle {
 	}
 
 	@PostMapping("/cadastro")
-	public void cadastrarCliente(@RequestBody Cliente cliente) {
-		repositorio.save(cliente);
-	}
+    public ResponseEntity<?> cadastrarCliente(@RequestBody Cliente cliente) {
+        try {
+            Cliente novoCliente = clienteCadastro.cadastrarNovoCliente(cliente);
+            return new ResponseEntity<>(novoCliente, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 	@PutMapping("/atualizar")
 	public void atualizarCliente(@RequestBody Cliente atualizacao) {

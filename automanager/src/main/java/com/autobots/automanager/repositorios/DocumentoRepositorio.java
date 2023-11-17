@@ -10,4 +10,6 @@ public interface DocumentoRepositorio extends JpaRepository<Documento, Long> {
 
     @Query("SELECT d FROM Documento d WHERE d.numero = :numero")
     Documento findDocumentoByNumero(@Param("numero") String numero);
+    
+    boolean existsByNumero(String numero);
 }
