@@ -140,9 +140,16 @@ public class ClienteControle {
 		repositorio.save(cliente);
 	}
 
-	@DeleteMapping("/excluir")
-	public void excluirCliente(@RequestBody Cliente exclusao) {
-		Cliente cliente = repositorio.getById(exclusao.getId());
-		repositorio.delete(cliente);
+	@DeleteMapping("/excluir/{id}")
+	public void excluirCliente(@PathVariable Long id) {
+	    // Verifique os logs para garantir que o ID esteja sendo capturado corretamente
+	    System.out.println("Excluindo cliente com ID: " + id);
+	    
+	    Cliente cliente = repositorio.getById(id);
+	    if (cliente != null) {
+	        repositorio.delete(cliente);
+	    } else {
+	        
+	    }
 	}
 }
